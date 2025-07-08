@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextDrivr Bihar - Book Your Ride</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>NextDrivr Bihar</h1>
+    <p>Reliable Car Rental Services</p>
+  </header>
+
+  <main>
+    <section class="booking">
+      <h2>Book a Ride</h2>
+      <form id="bookingForm">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <input type="text" name="pickup" placeholder="Pickup Location" required />
+        <input type="text" name="drop" placeholder="Drop Location" required />
+        <input type="datetime-local" name="datetime" required />
+
+        <select name="trip_type" required>
+          <option value="">Select Trip Type</option>
+          <option value="One Way">One Way</option>
+          <option value="Round Trip">Round Trip</option>
+        </select>
+
+        <select name="vehicle" required>
+          <option value="">Select Vehicle Type</option>
+          <option value="Sedan">Sedan</option>
+          <option value="SUV">SUV</option>
+          <option value="Innova">Innova</option>
+        </select>
+
+        <button type="submit">Book Now</button>
+      </form>
+      <a href="https://wa.me/918709083341" class="whatsapp">📱 Book via WhatsApp</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 NextDrivr Bihar. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        phone: form.phone.value,
+        pickup: form.pickup.value,
+        drop: form.drop.value,
+        datetime: form.datetime.value,
+        trip_type: form.trip_type.value,
+        vehicle: form.vehicle.value
+      };
+
+      fetch('YOUR_GOOGLE_SHEET_WEBHOOK_URL', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        alert('Booking Successful!');
+        form.reset();
+      }).catch(error => {
+        alert('Something went wrong. Please try again.');
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
